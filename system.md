@@ -122,15 +122,13 @@ HTML 特性是大小写不敏感的。当驼峰式的 prop 名在 HTML 中作为
     }
   }
 })
-\
 Vue.component('child', {
   // ...
   props: ['onLoad'],
   ready: function () {
     this.onLoad('message from child!')
   }
-})
-```
+})```
 
 ```<!-- 父级模板 -->
 <child on-load="{{onChildLoaded}}"></child>```
@@ -157,8 +155,7 @@ Vue.component('child', {
 
 组件可以对接收的 prop 声明一定的规则限制。在开发给他人使用的组件时这会很有用，因为对 prop 的有效性检验可以看做是组件 API 的一部分，并且能保证用户正确地使用了组件。与直接把 prop 定义成字符串不同，你需要使用包含验证规则的对象：
 
-```
-Vue.component('example', {
+```Vue.component('example', {
   props: {
     // 基本类型检查 (`null` 表示接受所有类型)
     onSomeEvent: Function,
@@ -192,8 +189,7 @@ Vue.component('example', {
       }
     }
   }
-})
-```
+})```
 
 其中 type 可以是以下任一原生构造函数：
 
@@ -212,8 +208,7 @@ Vue.component('example', {
 
 如果有需要，你也可以使用 `inherit: true` 选项来让子组件通过原型链继承父级的全部属性：
 
-```
-var parent = new Vue({
+```var parent = new Vue({
   data: {
     a: 1
   }
@@ -229,13 +224,11 @@ var child = parent.$addChild({
 console.log(child.a) // -> 1
 console.log(child.b) // -> 2
 parent.a = 3
-console.log(child.a) // -> 3
-```
+console.log(child.a) // -> 3```
 
 这里有一点需要注意：由于 Vue 实例上的数据属性都是 `getter/setter`，设置 `child.a = 2` 会直接改变 `parent.a` 的值，而非在子级创建一个新属性遮蔽父级中的属性：
 
-```
-child.a = 4
+```child.a = 4
 console.log(parent.a) // -> 4
 console.log(child.hasOwnProperty('a')) // -> false
 ```
@@ -255,8 +248,7 @@ console.log(child.hasOwnProperty('a')) // -> false
 
 每一个组件，或者说 Vue 的实例，都有着自己的生命周期：它会被创建、编译、插入、移除，最终销毁。在这每一个时间点，实例都会触发相应的事件，而在创建实例或者定义组件时，我们可以传入生命周期钩子函数来响应这些事件。例如：
 
-```
-var MyComponent = Vue.extend({
+```var MyComponent = Vue.extend({
   created: function () {
     console.log('An instance of MyComponent has been created!')
   }
@@ -280,15 +272,13 @@ var MyComponent = Vue.extend({
   }
 })```
 
-```
-<component is="{{currentView}}">
+```<component is="{{currentView}}">
   `<!-- 内容随 vm.currentview 一同改变！ -->
 </component>```
 
 如果希望被切换出去的组件保持存活，从而保留它的当前状态或者避免反复重新渲染，你可以加上 `keep-alive` 特性参数：
 
-```
-<component is="{{currentView}}" keep-alive>
+```<component is="{{currentView}}" keep-alive>
   `<!-- 不活跃的的组件会被缓存！ -->
 </component>
 ```
@@ -312,8 +302,7 @@ var MyComponent = Vue.extend({
 <component is="{{view}}" wait-for="data-loaded"></component>
 ```
 
-```
-// 组件定义
+```// 组件定义
 {
   // 获取数据并在编译完成钩子函数中异步触发事件。
   // 这里jQuery只是用作演示。
@@ -341,8 +330,7 @@ var MyComponent = Vue.extend({
 
 **示例**：
 
-```
-`<!-- 先淡出，之后淡入 -->
+```<!-- 先淡出，之后淡入 -->
 <component
   is="{{view}}"
   v-transition="fade"
@@ -358,8 +346,7 @@ var MyComponent = Vue.extend({
   `<user-profile v-repeat="users"></user-profile>`
 `</ul>`
 
-```
-new Vue({
+```new Vue({
   el: '#list-example',
   data: {
     users: [
@@ -378,8 +365,7 @@ new Vue({
       template: '<li>{{name}} {{email}}</li>'
     }
   }
-})
-```
+})```
 
 **结果**：
 
@@ -417,8 +403,7 @@ var child = parent.$.profile```
 
 虽然你可以直接访问一个 Vue 实例的子级与父级，但是通过内建的事件系统进行跨组件通讯更为便捷。这还能使你的代码进一步解耦，变得更易于维护。一旦建立了上下级关系，就能使用组件的 **事件实例方法** 来分发和触发事件。
 
-```
-var parent = new Vue({
+```var parent = new Vue({
   template: '<div><child></child></div>',
   created: function () {
     this.$on('child-created', function (child) {
@@ -440,8 +425,7 @@ var parent = new Vue({
 
 有时一个组件需要使用类似命令、过滤器和子组件这样的资源，但是又希望把这些资源封装起来以便自己在别处复用。这一点可以用私有资源实例化选项来实现。私有资源只能被拥有该资源的组件及其继承组件和子组件的实例访问。
 
-```
-// 全部5种类型的资源
+```// 全部5种类型的资源
 var MyComponent = Vue.extend({
   directives: {
     // “id : 定义”键值对，与处理全局方法的方式相同
@@ -461,20 +445,17 @@ var MyComponent = Vue.extend({
   effects: {
     // ...
   }
-})
-```
+})```
 
 >你可以通过设置 `Vue.config.strict = true` 阻止子组件访问父组件的私有资源。
 
 又或者，可以用与全局资源注册方法类似的链式 API 为现有组件构造方法添加私有资源：
 
-```
-MyComponent
+```MyComponent
   .directive('...', {})
   .filter('...', function () {})
   .component('...', {})
-  // ...
-```
+  // ...```
 
 ### 资源命名约定
 
@@ -482,13 +463,11 @@ MyComponent
 
 **示例**
 
-```
-// in a component definition
+```// in a component definition
 components: {
   // 用驼峰命名注册组件
   myComponent: { /*... */ }
-}
-```
+}```
 
 ```<!-- 在模板中使用连字符命名来调用 -->
 <my-component></my-component>```
@@ -497,15 +476,13 @@ components: {
 
 ```import compA from './components/a';
 import compB from './components/b';
-`
 export default {
   components: {
     // 在模板中以 <comp-a> 和 <comp-b> 的形式调用
     compA,
     compB
   }
-}
-```
+}```
 
 ## 内容插入
 
@@ -545,11 +522,10 @@ export default {
 
 举例来说，假设有一个带有如下模板的 `multi-insertion` 组件：
 
-```
-<content select="p:nth-child(3)"></content>
+
+```<content select="p:nth-child(3)"></content>
 <content select="p:nth-child(2)"></content>
-<content select="p:nth-child(1)"></content>
-```
+<content select="p:nth-child(1)"></content>```
 
 父标签：
 
@@ -584,8 +560,7 @@ export default {
 
 在大型项目中，我们可能需要把应用分割成小的组成部分，并且只在实际用到一个组件的时候加载它。为了让这种操作更容易，Vue.js 允许把组件定义成一个异步加载组件定义的工厂方法。Vue.js 只会在需要渲染该组件时才触发相应的工厂方法，并且会对加载结果进行缓存。例如：
 
-```
-Vue.component('async-example', function (resolve, reject) {
+```Vue.component('async-example', function (resolve, reject) {
   setTimeout(function () {
     resolve({
       template: '<div>I am async!</div>'
@@ -595,8 +570,7 @@ Vue.component('async-example', function (resolve, reject) {
 
 工厂方法会收到一个 `resolve` 回调方法，应该在从服务器获得组件定义之后调用它。你也可以通过调用 `reject(reason)` 来提示加载失败。这里的 `setTimeout` 只是用作简单的演示；具体如何获取组件完全取决于你。有一种不错的手段是把异步组件和 **Webpack 的分块打包功能**结合使用：
 
-```
-Vue.component('async-webpack-example', function (resolve) {
+```Vue.component('async-webpack-example', function (resolve) {
   // 这个特殊的 require 语法会通知 webpack
   // 自动把构建后的代码分割成
   // 会通过 ajax 请求自动加载的 bundle。

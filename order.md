@@ -4,11 +4,9 @@
 
 如果你没有用过 AngularJS，你可能不太清楚指令 (`directive`) 是什么。一个指令的本质是模板中出现的特殊标记，让处理模板的库知道需要对这里的 DOM 元素进行一些对应的处理。Vue.js 的指令概念相比 Angular 要简单得多。Vue.js 中的指令只会以带前缀的 HTML 特性 (attribute) 的形式出现：
 
-```
-<element
+```<element
   prefix-directiveId="[argument:] expression [| filters...]">
-</element>
-```
+</element>```
 
 ## 简单示例
 

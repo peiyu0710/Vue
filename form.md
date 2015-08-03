@@ -6,8 +6,7 @@
 
 **示例**
 
-```
-<form id="demo">
+```<form id="demo">
   <!-- text -->
   <p>
     <input type="text" v-model="msg">
@@ -42,11 +41,9 @@
     {{multiSelect}}
   </p>
   <p><pre>data: {{$data | json 2}}</pre></p>
-</form>
-```
+</form>```
 
-```
-new Vue({
+```new Vue({
   el: '#demo',
   data: {
     msg      : 'hi!',

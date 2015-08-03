@@ -75,8 +75,7 @@ Vue.nextTick(function () {
 
 除此之外，也有一个实例方法 `vm.$nextTick()`。这个方法和全局的 `Vue.nextTick` 功能一样，但更方便在组件内部使用，因为它不需要全局的 `Vue` 变量，另外它的回调函数的 `this` 上下文会自动绑定到调用它的 `Vue` 实例：
 
-```
-Vue.component('example', {
+```Vue.component('example', {
   template: '<span>{{msg}}</span>',
   data: function () {
     return {
@@ -109,8 +108,7 @@ Vue.component('example', {
 
 如果需要在子组件的根节点上绑定指令，应当将指令写在子组件的模板内：
 
-```
-Vue.component('child-component', {
+```Vue.component('child-component', {
   // 这次作用域对了
   template: '<div v-on="click: childMethod">Child</div>',
   methods: {
@@ -118,8 +116,7 @@ Vue.component('child-component', {
       console.log('child method invoked!')
     }
   }
-})
-```
+})```
 
 注意，当组件和 `v-repeat` 一同使用时，`$index` 作为子作用域属性也会受到此规则的影响。
 
@@ -152,8 +149,7 @@ Vue.component('child-component', {
   `<child-component send-message="{{onChildMsg}}"></child-component>`  
 `</div>`  
 
-```
-new Vue({
+```new Vue({
   el: '#demo',
   data: {
     msg: ''
@@ -192,8 +188,7 @@ new Vue({
       }
     }
   }
-})
-```
+})```
 
 **Result**：
 
@@ -209,8 +204,7 @@ new Vue({
 
 父模板中调用组件的元素将会被组件本身的模板取代。因此，如果组件的模板包含多个顶级元素：
 
-```
-Vue.component('example', {
+```Vue.component('example', {
   template:
     '<div>A</div>' +
     '<div>B</div>'
@@ -225,8 +219,7 @@ Vue.component('example', {
 
 在这两个情况下，实例将变成一个**片段实例** (fragment instance)，也即没有根元素的实例。它的 $el 指向一个锚节点（普通模式下是空的文本节点，debug 模式下是注释节点）。更重要的是，父模板组件元素上的指令、过渡效果和属性绑定（props 除外）将无效，因为生成的实例并没有根元素供它们绑定：
 
-```
-`<!-- 指令不生效，因为没有根元素用来绑定 -->
+```<!-- 指令不生效，因为没有根元素用来绑定 -->
 <example v-show="ok" v-transition="fade"></example>
 `
 `<!-- props 还是能够正常生效 -->

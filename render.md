@@ -10,8 +10,7 @@
   </li>
 </ul>```
 
-```
-var demo = new Vue({
+```var demo = new Vue({
   el: '#demo',
   data: {
     parentMsg: 'Hello',
@@ -48,8 +47,7 @@ var demo = new Vue({
   </li>
 </ul>```
 
-```
-new Vue({
+```new Vue({
   el: '#tags',
   data: {
     tags: ['JavaScript', 'MVVM', 'Vue.js']
@@ -130,8 +128,7 @@ demo.items.$remove(0)```
 
 例如，如果你的数据长这样：
 
-```
-{
+```{
   items: [
     { _uid: '88f869d', ... },
     { _uid: '7496c10', ... }
@@ -203,8 +200,7 @@ demo.items.$remove(0)```
     <div v-repeat="val">Hi! {{$index}}</div>
 </div>```
 
-```
-new Vue({
+```new Vue({
   el: '#range',
   data: {
     val: 3
