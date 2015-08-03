@@ -121,7 +121,6 @@ describe('my-component', function () {
 
 ```
 var webpack = require('webpack')
-`
 module.exports = {
   // ...
   plugins: [

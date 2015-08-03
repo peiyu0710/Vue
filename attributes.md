@@ -29,14 +29,11 @@ demo.fullName // 'Foo Bar'
 
 当你只需要 `getter` 的时候，你可以直接提供一个函数：
 
-```
-// ...
-computed: {
+```computed: {
   fullName: function () {
     return this.firstName + ' ' + this.lastName 
   }    
 }
-// ...
 ```
 
 一个计算属性本质上是一个被 `getter/setter` 函数定义了的属性。计算属性使用起来和一般属性一样，只是在访问它的时候，你会得到 `getter` 函数返回的值，改变它的时候，你会触发 `setter` 函数，新值将会作为 `setter` 的参数被传入。
