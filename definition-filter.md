@@ -4,13 +4,12 @@
 
 和自定义指令类似，你可以用全局方法 `Vue.filter()`，传递一个**过滤器 ID** 和一个**过滤器函数**来注册一个自定义过滤器。过滤器函数会接受一个参数值并返回将其转换后的值：
 
-```
-Vue.filter('reverse', function (value) {
+```Vue.filter('reverse', function (value) {
   return value.split('').reverse().join('')
 })```
 
-```
-`<!-- 'abc' => 'cba' -->
+
+```<!-- 'abc' => 'cba' -->
 <span v-text="message | reverse"></span>```
 
 过滤器函数也可以接受内联参数：
@@ -26,8 +25,7 @@ Vue.filter('reverse', function (value) {
 
 到目前为止，我们使用过滤器都是把来自模型的值在显示到视图之前进行转换。其实我们也可以定义一个过滤器，在把来自视图的值（input 元素）在写回模型之前进行转换：
 
-```
-Vue.filter('check-email', {
+```Vue.filter('check-email', {
   // 这里 read 可选，只是为了演示
   read: function (val) {
     return val
