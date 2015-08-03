@@ -16,8 +16,7 @@ module.exports = {
   }
 }```
 
-```
-// test.js
+```// test.js
 var myMixin = require('./mixin')
 var Component = Vue.extend({
   mixins: [myMixin]
@@ -38,8 +37,7 @@ var component = new Component() // -> "hello from mixin!"```
 2. 添加一个或几个全局资源：指令、过滤器、动画效果等。比如 `vue-touch`
 3. 通过绑定到 `Vue.prototype` 的方式添加一些 Vue 实例方法。这里有个约定，就是 Vue 的实例方法应该带有 `$` 前缀，这样就不会和用户的数据和方法产生冲突了。
 
-```
-exports.install = function (Vue, options) {
+```exports.install = function (Vue, options) {
   Vue.myGlobalMethod = ...          // 1
   Vue.directive('my-directive', {}) // 2
   Vue.prototype.$myMethod = ...     // 3
@@ -50,11 +48,9 @@ exports.install = function (Vue, options) {
 
 假设我们使用的构建系统是 `CommonJS`，则需要作如下调用：
 
-```
-var vueTouch = require('vue-touch')
+```var vueTouch = require('vue-touch')
 // use the plugin globally
-Vue.use(vueTouch)
-```
+Vue.use(vueTouch)```
 
 你也可以向插件里传递额外的选项：
 

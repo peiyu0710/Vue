@@ -20,8 +20,7 @@
 
 你还需要定义 `.expand-transition`， `.expand-enter` 和`.expand-leave` 三个 CSS 类：
 
-```
-.expand-transition {
+```.expand-transition {
   transition: all .3s ease;
   height: 30px;
   padding: 10px;
@@ -32,14 +31,11 @@
   height: 0;
   padding: 0 10px;
   opacity: 0;
-}
-```
+}```
 
 同时，你也可以提供 JavaScript 钩子：
 
-```
-Vue.transition('expand', {
-`
+```Vue.transition('expand', {
   beforeEnter: function (el) {
     el.textContent = 'beforeEnter'
   },
@@ -65,8 +61,7 @@ Vue.transition('expand', {
   leaveCancelled: function (el) {
     // handle cancellation
   }
-})
-```
+})```
 
 **结果**
 
@@ -108,12 +103,10 @@ Vue.transition('expand', {
 
 VS
 
-```
-enter: function (el, done) {
+```enter: function (el, done) {
   // 有第二个参数
   // 过渡效果结束必须由手动调用 `done` 来决定
-}
-```
+}```
 
 >当多个元素同时执行过渡效果时，Vue.js 会进行批量处理以保证只触发一次强制布局。
 
@@ -125,8 +118,7 @@ CSS 动画通过与 CSS 过渡效果一样的方式进行调用，区别就是�
 
 `<span v-show="show" v-transition="bounce">Look at me!</span>`
 
-```
-.bounce-enter {
+```.bounce-enter {
   animation: bounce-in .5s;
 }
 .bounce-leave {
@@ -153,8 +145,7 @@ CSS 动画通过与 CSS 过渡效果一样的方式进行调用，区别就是�
   100% {
     transform: scale(0);
   }
-}
-```
+}```
 
 **结果**
 
@@ -164,8 +155,7 @@ CSS 动画通过与 CSS 过渡效果一样的方式进行调用，区别就是�
 
 你也可以只使用 JavaScript 钩子，不定义任何 CSS 过渡规则。当只使用 JavaScript 钩子时，`enter` 和 `leave` 钩子必须使用 `done` 回调，否则它们将会被同步调用，过渡将立即结束。下面的示例中我们使用 jQuery 来注册一个自定义的 JavaScript 过渡效果：
 
-```
-Vue.transition('fade', {
+```Vue.transition('fade', {
   enter: function (el, done) {
     // 此时元素已被插入 DOM
     // 动画完成时调用 done 回调
