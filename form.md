@@ -98,8 +98,7 @@
 
 会渲染成：
 
-```
-<select>
+```<select>
   <option value="a">A</option>
   <option value="b">B</option>
 </select>```
