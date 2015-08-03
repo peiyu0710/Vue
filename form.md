@@ -90,14 +90,16 @@
 
 该数组可以包含普通字符串或对象。对象的格式应为 `{text:'', value:''}`。这允许你把展示的文字和其背后对应的值区分开来。
 
-```[
+```
+[
   { text: 'A', value: 'a' },
   { text: 'B', value: 'b' }
 ]```
 
 会渲染成：
 
-```<select>
+```
+<select>
   <option value="a">A</option>
   <option value="b">B</option>
 </select>```
