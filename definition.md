@@ -10,8 +10,7 @@ Vue.js 允许你注册自定义指令，实质上是让你教 Vue 一些新技�
 
 **Example**
 
-```
-Vue.directive('my-directive', {
+```Vue.directive('my-directive', {
   bind: function () {
     // 做绑定的准备工作
     // 比如添加事件监听器，或是其他只需要执行一次的复杂操作
@@ -33,8 +32,7 @@ Vue.directive('my-directive', {
 
 如果你只需要 `update` 函数，你可以只传入一个函数，而不用传定义对象：
 
-```		
-Vue.directive('my-directive', function (value) {
+```Vue.directive('my-directive', function (value) {
   // 这个函数会被作为 update() 函数使用
 })```
 
@@ -53,8 +51,7 @@ Vue.directive('my-directive', function (value) {
 
 `<div id="demo" v-demo="LightSlateGray : msg"></div>`
 
-```
-Vue.directive('demo', {
+```Vue.directive('demo', {
   bind: function () {
     this.el.style.color = '#fff'
     this.el.style.backgroundColor = this.arg
@@ -73,8 +70,7 @@ var demo = new Vue({
   data: {
     msg: 'hello!'
   }
-})
-```
+})```
 
 **Result**
 
@@ -127,8 +123,7 @@ var demo = new Vue({
 
 如果你的指令想向 Vue 实例写回数据，你需要传入 `twoWay: true` 。该选项允许在指令中使用 `this.set(value)`。
 
-```
-Vue.directive('example', {
+```Vue.directive('example', {
   twoWay: true,
   bind: function () {
     this.handler = function () {
@@ -142,8 +137,7 @@ Vue.directive('example', {
   unbind: function () {
     this.el.removeEventListener('input', this.handler)
   }
-})
-```
+})```
 
 ## 内联语句
 
@@ -151,8 +145,7 @@ Vue.directive('example', {
 
 `<div v-my-directive="a++"></div>`
 
-```
-Vue.directive('my-directive', {
+```Vue.directive('my-directive', {
   acceptStatement: true,
   update: function (fn) {
     // the passed in value is a function which when called,
@@ -169,8 +162,7 @@ Vue.directive('my-directive', {
 
 `<div v-my-directive="obj"></div>`
 
-```
-Vue.directive('my-directive', {
+```Vue.directive('my-directive', {
   deep: true,
   update: function (obj) {
     // 当 obj 内部嵌套的属性变化时也会调用此函数
@@ -187,8 +179,7 @@ Vue.directive('my-directive', {
 
 有时候，我们可能想要我们的指令可以以自定义元素的形式被使用，而不是作为一个特性。这与 `Angular` 的 `E` 类指令的概念非常相似。元素指令可以看做是一个轻量的自定义组件（后面会讲到）。你可以像下面这样注册一个自定义的元素指令：
 
-```
-Vue.elementDirective('my-directive', {
+```Vue.elementDirective('my-directive', {
   // 和普通指令的 API 一致
   bind: function () {
     // 对 this.el 进行操作...
