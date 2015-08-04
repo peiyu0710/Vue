@@ -58,7 +58,5 @@ Polymer 是另一个由 Google 支持的项目，实际上也是 Vue.js 的灵�
 
 在更高层面上，Vue 与 Knockout 的区别是，Vue 的组件系统鼓励你使用 自上而下、结构优先、声明式的设计策略，而不是从下而上命令式的创建 ViewModel。Vue 的源数据是一个纯对象，不包含逻辑，可以直接 JSON.stringify 并传给 post 请求。ViewModel 代理了数据对象。Vue 实例始终用原生数据绑定相应的 DOM 元素。Knockout 的 ViewModel 本质上是数据，Model 与 ViewModel 的界限非常模糊，很可能导致过于复杂的 ViewModel 逻辑。
 
-- **我想要参与!**
 
-欢迎! 请阅读 **贡献指南**，或是加入![](images/5.svg)参与讨论。
 

@@ -4,20 +4,24 @@
 
 在 Vue.js 中，我们可以用 Vue 扩展出来的 ViewModel 子类当做可复用的组件。这在概念上与 **Web Components** 非常相似，不同之处在于 Vue 的组件无需任何 polyfill。要创建一个组件，只需调用 `Vue.extend()` 来生成一个 Vue 的子类构造函数：
 
-```// 扩展 Vue 得到一个可复用的构造函数
+```
+// 扩展 Vue 得到一个可复用的构造函数
 var MyComponent = Vue.extend({
   template: '<p>A custom component!</p>'
-})```
+})
+```
 
 Vue 的构造函数可接收的大部分选项都能在 `Vue.extend()` 中使用，不过也有两个特例：`data` 和 `el`。由于每个 Vue 的实例都应该有自己的 `$data` 和 `$el`，我们显然不希望传递给 `Vue.extend()` 的值被所有通过这个构造函数创建的实例所共享。因此如果要定义组件初始化默认数据和元素的方式，应该传入一个函数：
 
-```var ComponentWithDefaultData = Vue.extend({
+```
+var ComponentWithDefaultData = Vue.extend({
   data: function () {
     return {
       title: 'Hello!'
     }
   }
-})```
+})
+```
 
 接下来，就可以用 `Vue.component()` 来注册这个构造函数了：
 
@@ -26,16 +30,20 @@ Vue.component('my-component', MyComponent)```
 
 为了更简单，也可以直接传入 option 对象来代替构造函数。如果接收到的是一个对象，`Vue.component()` 会为你隐式调用 `Vue.extend()`：
 
-```// 注意：该方法返回全局 Vue 对象，
+```
+// 注意：该方法返回全局 Vue 对象，
 // 而非注册的构造函数
 Vue.component('my-component', {
   template: '<p>A custom component!</p>'
-})```
+})
+```
 
 之后就能在父级实例的模板中使用注册过的组件了 (务必在初始化根实例之前注册组件) ：
 
-```<!-- 父级模板 -->
-<my-component></my-component>```
+```
+<!-- 父级模板 -->
+<my-component></my-component>
+```
 
 渲染结果：
 
@@ -43,14 +51,16 @@ Vue.component('my-component', {
 
 你没有必要，也不应该全局注册所有组件。你可以限制一个组件仅对另一个组件及其后代可用，只要在另一个组件的 `components` 选项中传入这个组件即可 (这种封装形式同样适用于其他资源，例如指令和过滤器) ：
 
-```var Parent = Vue.extend({
+```
+var Parent = Vue.extend({
   components: {
     child: {
       // child 只能被
       // Parent 及其后代组件使用
     }
   }
-})```
+})
+```
 
 理解 `Vue.extend()` 和 `Vue.component()` 的区别非常重要。由于 `Vue` 本身是一个构造函数，`Vue.extend()` 是一个**类继承方法**。它用来创建一个 `Vue` 的子类并返回其构造函数。而另一方面，`Vue.component()` 是一个类似 `Vue.directive()` 和 `Vue.filter()` 的资源注册方法。它作用是建立指定的构造函数与 ID 字符串间的关系，从而让 Vue.js 能在模板中使用它。直接向 `Vue.component()` 传递 options 时，它会在内部调用 `Vue.extend()`。
 
@@ -66,13 +76,15 @@ Vue.js 支持两种不同风格的调用组件的 API：命令式的基于构造
 
 一个 “prop” 是指组件的数据对象上的一个预期会从父级组件取得的字段。一个子组件需要通过 `prop` 选项显式声明它希望获得的 prop：
 
-```Vue.component('child', {
+```
+Vue.component('child', {
   // 声明 prop
   props: ['msg'],
   // prop 可以在模板内部被使用，
   // 也可以类似 `this.msg` 这样来赋值
   template: '<span>{{msg}}</span>'
-})```
+})
+```
 
 然后，我们可以像这样向这个组件传递数据：
 
@@ -86,27 +98,33 @@ Vue.js 支持两种不同风格的调用组件的 API：命令式的基于构造
 
 HTML 特性是大小写不敏感的。当驼峰式的 prop 名在 HTML 中作为特性名出现时，你需要用对应的连字符（短横）分隔形式代替：
 
-```Vue.component('child', {
+```
+Vue.component('child', {
   props: ['myMessage'],
   template: '<span>{{myMessage}}</span>'
-})```
+})
+```
 
-```<!-- 重要：使用连字符分隔的名称！ -->
-<child my-message="hello!"></child>```
+```
+<!-- 重要：使用连字符分隔的名称！ -->
+<child my-message="hello!"></child>
+```
 
 ### 动态 prop
 
 我们同样能够从父级向下传递动态数据。例如：
 
-```<div>
+```
+<div>
   <input v-model="parentMsg">
   <br>
   <child msg="{{parentMsg}}"></child>
-</div>```
+</div>
+```
 
 **结果**：
 
-<input><br><span>Inherited message</span>
+![](images/8.png)
 
 >暴露 `$data` 作为 prop 也是可行的。传入的值必须是一个对象，它会被用来替换组件默认的 `$data` 对象。
 
@@ -114,7 +132,8 @@ HTML 特性是大小写不敏感的。当驼峰式的 prop 名在 HTML 中作为
 
 同样可以向下传递一个方法或语句作为子组件的一个回调方法。借此可以进行声明式的、解耦的父子通信：
 
-```Vue.component('parent', {
+```
+Vue.component('parent', {
   // ...
   methods: {
     onChildLoaded: function (msg) {
@@ -128,10 +147,13 @@ Vue.component('child', {
   ready: function () {
     this.onLoad('message from child!')
   }
-})```
+})
+```
 
-```<!-- 父级模板 -->
-<child on-load="{{onChildLoaded}}"></child>```
+```
+<!-- 父级模板 -->
+<child on-load="{{onChildLoaded}}"></child>
+```
 
 ### prop 绑定类型
 
@@ -139,7 +161,8 @@ Vue.component('child', {
 
 对比这些语法：
 
-```<!-- 默认情况下，单向绑定 -->
+```
+<!-- 默认情况下，单向绑定 -->
 <child msg="{{parentMsg}}"></child>
 `<!-- 显式双向绑定 -->
 <child msg="{{@ parentMsg}}"></child>
@@ -155,7 +178,8 @@ Vue.component('child', {
 
 组件可以对接收的 prop 声明一定的规则限制。在开发给他人使用的组件时这会很有用，因为对 prop 的有效性检验可以看做是组件 API 的一部分，并且能保证用户正确地使用了组件。与直接把 prop 定义成字符串不同，你需要使用包含验证规则的对象：
 
-```Vue.component('example', {
+```
+Vue.component('example', {
   props: {
     // 基本类型检查 (`null` 表示接受所有类型)
     onSomeEvent: Function,
@@ -189,7 +213,8 @@ Vue.component('child', {
       }
     }
   }
-})```
+})
+```
 
 其中 type 可以是以下任一原生构造函数：
 
@@ -208,7 +233,8 @@ Vue.component('child', {
 
 如果有需要，你也可以使用 `inherit: true` 选项来让子组件通过原型链继承父级的全部属性：
 
-```var parent = new Vue({
+```
+var parent = new Vue({
   data: {
     a: 1
   }
@@ -224,11 +250,13 @@ var child = parent.$addChild({
 console.log(child.a) // -> 1
 console.log(child.b) // -> 2
 parent.a = 3
-console.log(child.a) // -> 3```
+console.log(child.a) // -> 3
+```
 
 这里有一点需要注意：由于 Vue 实例上的数据属性都是 `getter/setter`，设置 `child.a = 2` 会直接改变 `parent.a` 的值，而非在子级创建一个新属性遮蔽父级中的属性：
 
-```child.a = 4
+```
+child.a = 4
 console.log(parent.a) // -> 4
 console.log(child.hasOwnProperty('a')) // -> false
 ```
@@ -237,8 +265,10 @@ console.log(child.hasOwnProperty('a')) // -> false
 
 当组件被用在父模板中时，例如：
 
-```<!-- 父模板 -->
-<my-component v-show="active" v-on="click:onClick"></my-component>```
+```
+<!-- 父模板 -->
+<my-component v-show="active" v-on="click:onClick"></my-component>
+```
 
 这里的命令 (`v-show` 和 `v-on`) 会在父作用域编译，所以 `active` 和 `onClick` 的取值取决于父级。任何子模版中的命令和插值都会在子作用域中编译。这样使得上下级组件间更好地分离。
 
@@ -248,11 +278,13 @@ console.log(child.hasOwnProperty('a')) // -> false
 
 每一个组件，或者说 Vue 的实例，都有着自己的生命周期：它会被创建、编译、插入、移除，最终销毁。在这每一个时间点，实例都会触发相应的事件，而在创建实例或者定义组件时，我们可以传入生命周期钩子函数来响应这些事件。例如：
 
-```var MyComponent = Vue.extend({
+```
+var MyComponent = Vue.extend({
   created: function () {
     console.log('An instance of MyComponent has been created!')
   }
-})```
+})
+```
 
 查阅 API 文档中可用的 **生命周期钩子函数完整列表**。
 
@@ -260,7 +292,8 @@ console.log(child.hasOwnProperty('a')) // -> false
 
 你可以使用内置的 `<component>` 元素在组件间动态切换来实现 “页面切换”：
 
-```new Vue({
+```
+new Vue({
   el: 'body',
   data: {
     currentView: 'home'
@@ -270,15 +303,19 @@ console.log(child.hasOwnProperty('a')) // -> false
     posts: { /* ... */ },
     archive: { /* ... */ }
   }
-})```
+})
+```
 
-```<component is="{{currentView}}">
+```
+<component is="{{currentView}}">
   `<!-- 内容随 vm.currentview 一同改变！ -->
-</component>```
+</component>
+```
 
 如果希望被切换出去的组件保持存活，从而保留它的当前状态或者避免反复重新渲染，你可以加上 `keep-alive` 特性参数：
 
-```<component is="{{currentView}}" keep-alive>
+```
+<component is="{{currentView}}" keep-alive>
   `<!-- 不活跃的的组件会被缓存！ -->
 </component>
 ```
@@ -295,7 +332,8 @@ console.log(child.hasOwnProperty('a')) // -> false
 
 **示例**：
 
-```<!-- 静态组件 -->
+```
+<!-- 静态组件 -->
 <my-component wait-for="data-loaded"></my-component>
 `
 `<!-- 动态组件 -->
@@ -330,7 +368,8 @@ console.log(child.hasOwnProperty('a')) // -> false
 
 **示例**：
 
-```<!-- 先淡出，之后淡入 -->
+```
+<!-- 先淡出，之后淡入 -->
 <component
   is="{{view}}"
   v-transition="fade"
@@ -346,7 +385,8 @@ console.log(child.hasOwnProperty('a')) // -> false
   `<user-profile v-repeat="users"></user-profile>`
 `</ul>`
 
-```new Vue({
+```
+new Vue({
   el: '#list-example',
   data: {
     users: [
@@ -365,7 +405,8 @@ console.log(child.hasOwnProperty('a')) // -> false
       template: '<li>{{name}} {{email}}</li>'
     }
   }
-})```
+})
+```
 
 **结果**：
 
@@ -376,10 +417,12 @@ console.log(child.hasOwnProperty('a')) // -> false
 
 在组件中标识符语法同样适用，并且被循环的数据会被设置成组件的一个属性，以标识符作为键名：
 
-```<ul id="list-example">
-  `<!-- 在组件内部可以通过 `this.user` 访问数据 -->
+```
+<ul id="list-example">
+  <!-- 在组件内部可以通过 `this.user` 访问数据 -->
   <user-profile v-repeat="user in users"></user-profile>
-</ul>```
+</ul>
+```
 
 >注意一旦组件跟 `v-repeat` 一同使用，同样的作用域规则也会被应用到该组件容器上的其他命令。结果就是，你在父级模板中将获取不到 `$index`；只能在组件自身的模板中获取。
 >
@@ -389,13 +432,17 @@ console.log(child.hasOwnProperty('a')) // -> false
 
 某些情况下需要通过 JavaScript 访问嵌套的子组件。要实现这种操作，需要使用 `v-ref` 为子组件分配一个 ID。例如：
 
-```<div id="parent">
+```
+<div id="parent">
   <user-profile v-ref="profile"></user-profile>
-</div>```
+</div>
+```
 
-```var parent = new Vue({ el: '#parent' })
+```
+var parent = new Vue({ el: '#parent' })
 // 访问子组件
-var child = parent.$.profile```
+var child = parent.$.profile
+```
 
 当 `v-ref` 与 `v-repeat` 一同使用时，会获得一个与数据数组对应的子组件数组。
 
@@ -403,7 +450,8 @@ var child = parent.$.profile```
 
 虽然你可以直接访问一个 Vue 实例的子级与父级，但是通过内建的事件系统进行跨组件通讯更为便捷。这还能使你的代码进一步解耦，变得更易于维护。一旦建立了上下级关系，就能使用组件的 **事件实例方法** 来分发和触发事件。
 
-```var parent = new Vue({
+```
+var parent = new Vue({
   template: '<div><child></child></div>',
   created: function () {
     this.$on('child-created', function (child) {
@@ -425,7 +473,8 @@ var child = parent.$.profile```
 
 有时一个组件需要使用类似命令、过滤器和子组件这样的资源，但是又希望把这些资源封装起来以便自己在别处复用。这一点可以用私有资源实例化选项来实现。私有资源只能被拥有该资源的组件及其继承组件和子组件的实例访问。
 
-```// 全部5种类型的资源
+```
+// 全部5种类型的资源
 var MyComponent = Vue.extend({
   directives: {
     // “id : 定义”键值对，与处理全局方法的方式相同
@@ -445,17 +494,20 @@ var MyComponent = Vue.extend({
   effects: {
     // ...
   }
-})```
+})
+```
 
 >你可以通过设置 `Vue.config.strict = true` 阻止子组件访问父组件的私有资源。
 
 又或者，可以用与全局资源注册方法类似的链式 API 为现有组件构造方法添加私有资源：
 
-```MyComponent
+```
+MyComponent
   .directive('...', {})
   .filter('...', function () {})
   .component('...', {})
-  // ...```
+  // ...
+```
 
 ### 资源命名约定
 
@@ -463,18 +515,23 @@ var MyComponent = Vue.extend({
 
 **示例**
 
-```// in a component definition
+```
+// in a component definition
 components: {
   // 用驼峰命名注册组件
   myComponent: { /*... */ }
-}```
+}
+```
 
-```<!-- 在模板中使用连字符命名来调用 -->
-<my-component></my-component>```
+```
+<!-- 在模板中使用连字符命名来调用 -->
+<my-component></my-component>
+```
 
 这和 **ES6 对象字面量简写** 完美搭配：
 
-```import compA from './components/a';
+```
+import compA from './components/a';
 import compB from './components/b';
 export default {
   components: {
@@ -482,7 +539,8 @@ export default {
     compA,
     compB
   }
-}```
+}
+```
 
 ## 内容插入
 
@@ -496,8 +554,10 @@ export default {
 
 `my-component` 的模板：
 
-```<h1>This is my component!</h1>  
-<content>This will only be displayed if no content is inserted</content>```
+```
+<h1>This is my component!</h1>  
+<content>This will only be displayed if no content is inserted</content>
+```
 
 使用该组件的父标签：
 
@@ -523,9 +583,11 @@ export default {
 举例来说，假设有一个带有如下模板的 `multi-insertion` 组件：
 
 
-```<content select="p:nth-child(3)"></content>
+```
+<content select="p:nth-child(3)"></content>
 <content select="p:nth-child(2)"></content>
-<content select="p:nth-child(1)"></content>```
+<content select="p:nth-child(1)"></content>
+```
 
 父标签：
 
@@ -577,7 +639,7 @@ export default {
   require(['./my-async-component'], resolve)
 })```
 
-下一节：[过渡效果](http://cn.vuejs.org/guide/transitions.html)
+下一节：[过渡效果](effect.md)
 
 
 

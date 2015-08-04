@@ -20,7 +20,8 @@
 
 你还需要定义 `.expand-transition`， `.expand-enter` 和`.expand-leave` 三个 CSS 类：
 
-```.expand-transition {
+```
+.expand-transition {
   transition: all .3s ease;
   height: 30px;
   padding: 10px;
@@ -31,11 +32,13 @@
   height: 0;
   padding: 0 10px;
   opacity: 0;
-}```
+}
+```
 
 同时，你也可以提供 JavaScript 钩子：
 
-```Vue.transition('expand', {
+```
+Vue.transition('expand', {
   beforeEnter: function (el) {
     el.textContent = 'beforeEnter'
   },
@@ -61,11 +64,12 @@
   leaveCancelled: function (el) {
     // handle cancellation
   }
-})```
+})
+```
 
 **结果**
 
-<div id="demo"><div class="expand-transition">hello</div><button>Toggle</button>
+![](images/9.png)
 
 这里使用的 CSS 类名由 `v-transition` 指令的值所决定。以 `v-transition="fade"` 为例，CSS 类 `.fade-transition` 将会一直存在，而 `.fade-enter` 和 `.fade-leave` 将会在合适的时机自动被添加或移除。当 `v-transition` 指令没有提供值的时候，所使用的 CSS 类名将会是默认的 `.v-transition`， `.v-enter` 和 `.v-leave`。
 
@@ -96,17 +100,21 @@
 
 最后，`enter` 与 `leave` 钩子函数可以接受可选的第二个参数：一个回调函数。当你的函数签名中含有第二个参数时，即表示你期望使用此回调来显式地完成整个过渡过程，而不是依赖 Vue 去自动检测 CSS 过渡的 `transitionend` 事件。比如：
 
-```enter: function (el) {
+```
+enter: function (el) {
   // 无第二个参数
   // 过渡效果的结束由 CSS 过渡结束事件来决定
-}```
+}
+```
 
 VS
 
-```enter: function (el, done) {
+```
+enter: function (el, done) {
   // 有第二个参数
   // 过渡效果结束必须由手动调用 `done` 来决定
-}```
+}
+```
 
 >当多个元素同时执行过渡效果时，Vue.js 会进行批量处理以保证只触发一次强制布局。
 
@@ -118,7 +126,8 @@ CSS 动画通过与 CSS 过渡效果一样的方式进行调用，区别就是�
 
 `<span v-show="show" v-transition="bounce">Look at me!</span>`
 
-```.bounce-enter {
+```
+.bounce-enter {
   animation: bounce-in .5s;
 }
 .bounce-leave {
@@ -145,17 +154,19 @@ CSS 动画通过与 CSS 过渡效果一样的方式进行调用，区别就是�
   100% {
     transform: scale(0);
   }
-}```
+}
+```
 
 **结果**
 
-<span class="bounce-transition">Look at me!</span><br><button>Toggle</button>
+![](images/10.png)
 
 ## 纯 JavaScript 过渡效果
 
 你也可以只使用 JavaScript 钩子，不定义任何 CSS 过渡规则。当只使用 JavaScript 钩子时，`enter` 和 `leave` 钩子必须使用 `done` 回调，否则它们将会被同步调用，过渡将立即结束。下面的示例中我们使用 jQuery 来注册一个自定义的 JavaScript 过渡效果：
 
-```Vue.transition('fade', {
+```
+Vue.transition('fade', {
   enter: function (el, done) {
     // 此时元素已被插入 DOM
     // 动画完成时调用 done 回调
@@ -173,7 +184,8 @@ CSS 动画通过与 CSS 过渡效果一样的方式进行调用，区别就是�
   leaveCancelled: function (el) {
     $(el).stop()
   }
-})```
+})
+```
 
 定义此过渡之后，你就可以通过给 `v-transition` 指定对应的 ID 来调用它：
 
@@ -189,23 +201,21 @@ CSS 动画通过与 CSS 过渡效果一样的方式进行调用，区别就是�
 
 或者你也可以提供 `stagger`， `enterStagger` 或 `eaveStagger` 钩子来进行更细粒度的控制：
 
-```Vue.transition('stagger', {
+```
+Vue.transition('stagger', {
   stagger: function (index) {
     // 为每个过渡元素增加 50ms 的延迟,
     // 但是最大延迟为 300ms
     return Math.min(300, index * 50)
   }
-})```
+})
+```
 
 示例：
 
-- Bruce Lee
-- Jackie Chan
-- Chuck Norris
-- Jet Li
-- Kung Fury
+![](images/11.png)
 
-下一节：[创建大型应用](http://cn.vuejs.org/guide/application.html)。
+下一节：[创建大型应用](applications.md)。
 
 
 

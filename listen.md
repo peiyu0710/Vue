@@ -2,12 +2,15 @@
 
 你可以使用 `v-on` 指令来绑定并监听 DOM 事件。绑定的内容可以是一个当前实例上的方法 (后面无需跟括号) 或一个内联表达式。如果提供的是一个方法，则原生的 DOM event 会被作为第一个参数传入，同时这个 event 会带有 `targetVM` 属性，指向触发该事件的相应的 ViewModel：
 
-```<div id="demo">
+```
+<div id="demo">
   <a v-on="click: onClick">触发一个方法函数</a>
   <a v-on="click: n++">触发一个表达式</a>
-</div>```
+</div>
+```
 
-```new Vue({
+```
+new Vue({
   el: '#demo',
   data: {
     n: 0
@@ -18,19 +21,23 @@
       console.log(e.targetVM === this) // true
     }
   }
-})```
+})
+```
 
 ## 执行表达式
 
 当在 `v-repeat` 里使用 `v-on` 时，`targetVM` 显得很有用，因为 `v-repeat` 会创建大量子 ViewModel。但是，通过执行表达式的方式，把代表当前 ViewModel 数据对象的别名传进去，会更方便直观一些：
 
-```<ul id="list">
+```
+<ul id="list">
   <li v-repeat="item in items" v-on="click: toggle(item)">
     {{item.text}}
   </li>
-</ul>```
+</ul>
+```
 
-```new Vue({
+```
+new Vue({
   el: '#list',
   data: {
     items: [
@@ -43,13 +50,15 @@
       item.done = !item.done
     }
   }
-})```
+})
+```
 
 当你想要在表达式中访问原来的 DOM event，你可以传递一个 `$event` 参数进去：
 
 `<button v-on="click: submit('hello!', $event)">Submit</button>`
 
-```/* ... */
+```
+/* ... */
 {
   methods: {
     submit: function (msg, e) {
@@ -57,19 +66,24 @@
     }
   }
 }
-/* ... */```
+/* ... */
+```
 
 ## `key` 过滤器
 
 当监听键盘事件时，我们常常需要判断常用的 `key code`。Vue.js 提供了一个特殊的只能用在 `v-on` 指令的过滤器：`key`。它接收一个表示 key code 的参数并完成判断：
 
-```<!-- 只有当 keyCode 等于 13 时才调用方法 -->
-<input v-on="keyup:submit | key 13">```
+```
+<!-- 只有当 keyCode 等于 13 时才调用方法 -->
+<input v-on="keyup:submit | key 13">
+```
 
 它也预置了一些常用的按键名：
 
-```<!-- 效果同上 -->
-<input v-on="keyup:submit | key 'enter'">```
+```
+<!-- 效果同上 -->
+<input v-on="keyup:submit | key 'enter'">
+```
 
 查看 API 参考：**key 过滤器的全部预设参数**。
 
@@ -83,7 +97,7 @@
 
 3. 当一个 ViewModel 被销毁时，所有的事件监听都会被自动移除。你无须担心如何自行清理它们。
 
-下一步：[处理表单](http://cn.vuejs.org/guide/forms.html)。
+下一步：[处理表单](form.md)。
 
 
 

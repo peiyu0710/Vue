@@ -33,7 +33,8 @@ Vue.js 在设计思想上追求的是尽可能的灵活。它本身只是一个�
 
 **示例**：
 
-```<div id="app">
+```
+<div id="app">
   <component is="{{currentView}}"></component>
 </div>```
 
@@ -46,7 +47,8 @@ var app = new Vue({
   }
 })
 // Switching pages in your route handler:
-app.currentView = 'page1'```
+app.currentView = 'page1'
+```
 
 利用这种机制我们可以很容易地接入独立的路由库，比如 **Page.js** 或是 **Director**。
 
@@ -149,6 +151,6 @@ module.exports = {
 
 **Vue.js Hackernews Clone** 是一个应用的例子，它用 `Webpack + vue-loader` 代码组织、Director.js 做路由、HackerNews 官方的 Firebase API 为后端。这不算什么特别大的应用，但它结合并展示了本页面讨论到的各方面概念。
 
-下一节：[扩展 Vue](http://cn.vuejs.org/guide/extending.html)
+下一节：[扩展 Vue](extend.md)
 
 

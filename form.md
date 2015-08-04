@@ -6,7 +6,8 @@
 
 **示例**
 
-```<form id="demo">
+```
+<form id="demo">
   <!-- text -->
   <p>
     <input type="text" v-model="msg">
@@ -41,9 +42,11 @@
     {{multiSelect}}
   </p>
   <p><pre>data: {{$data | json 2}}</pre></p>
-</form>```
+</form>
+```
 
-```new Vue({
+```
+new Vue({
   el: '#demo',
   data: {
     msg      : 'hi!',
@@ -52,27 +55,21 @@
     selected : 'two',
     multiSelect: ['one', 'three']
   }
-})```
+})
+```
 
 **效果**
 
-<form id="demo"><p><input type="text"> hi!</p><p><input type="checkbox"> yes</p><p><input type="radio" name="picked" value="one"><input type="radio" name="picked" value="two"> one</p><p><select><option>one</option><option>two</option></select> two</p><p><select multiple=""><option>one</option><option>two</option><option>three</option></select>one,three</p><p>data:</p><pre style="font-size:13px;background:transparent;line-height:1.5em">{
-  "msg": "hi!",
-  "checked": true,
-  "picked": "one",
-  "selected": "two",
-  "multiSelect": [
-    "one",
-    "three"
-  ]
-}</pre><p></p></form>
+![](images/6.png)
 
 ## 惰性更新
 
 默认情况下，`v-model` 会在每个 `input` 事件之后同步输入的数据。你可以添加一个 `lazy` 特性，将其改变为在 `change` 事件之后才进行同步。
 
-```<!-- 在 "change" 而不是 "input" 事件触发后进行同步 -->
-<input v-model="msg" lazy>```
+```
+<!-- 在 "change" 而不是 "input" 事件触发后进行同步 -->
+<input v-model="msg" lazy>
+```
 
 ## 转换为数字
 
@@ -94,25 +91,31 @@
 [
   { text: 'A', value: 'a' },
   { text: 'B', value: 'b' }
-]```
+]
+```
 
 会渲染成：
 
-```<select>
+```
+<select>
   <option value="a">A</option>
   <option value="b">B</option>
-</select>```
+</select>
+```
 
 另外，数组里对象的格式也可以是 `{label:'', options:[...]}`。这样的数据会被渲染成为一个 `<optgroup>`：
 
-```[
+```
+[
   { label: 'A', options: ['a', 'b']},
   { label: 'B', options: ['c', 'd']}
-]```
+]
+```
 
 会渲染成：
 
-```<select>
+```
+<select>
   <optgroup label="A">
     <option value="a">a</option>
     <option value="b">b</option>
@@ -121,20 +124,25 @@
     <option value="c">c</option>
     <option value="d">d</option>
   </optgroup>
-</select>```
+</select>
+```
 
 你的原始数据很有可能不是这里所要求的格式，因此在动态生成选项时必须进行一些数据转换。为了简化这种转换，`options` 特性支持过滤器。将数据的转换逻辑做成一个可复用的 **自定义过滤器** 。通常来说是个好主意：
 
-```Vue.filter('extract', function (value, keyToExtract) {
+```
+Vue.filter('extract', function (value, keyToExtract) {
   return value.map(function (item) {
     return item[keyToExtract]
   })
-})```
+})
+```
 
-```<select
+```
+<select
   v-model="selectedUser"
   options="users | extract 'name'">
-</select>```
+</select>
+```
 
 上述过滤器将像 `[{ name: 'Bruce' }, { name: 'Chuck' }]` 这样的原始数据转化为 `['Bruce', 'Chuck']`，从而符合动态选项的格式要求。
 
@@ -146,8 +154,8 @@
 
 **结果**
 
-- edit me
+![](images/7.png)
 
 注意 `debounce` 参数并不对用户的输入事件进行 `debounce`：它只对底层数据的 “写入” 操作起作用。因此当使用 `debounce` 时，你应该用 `vm.$watch()` 而不是 `v-on` 来响应数据变化。
 
-下一步：[计算属性](http://cn.vuejs.org/guide/computed.html)
+下一步：[计算属性](attributes.md)
