@@ -4,13 +4,16 @@
 
 **示例**：
 
-```<ul id="demo">
+```
+<ul id="demo">
   <li v-repeat="items" class="item-{{$index}}">
     {{$index}} - {{parentMsg}} {{childMsg}}
   </li>
-</ul>```
+</ul>
+```
 
-```var demo = new Vue({
+```
+var demo = new Vue({
   el: '#demo',
   data: {
     parentMsg: 'Hello',
@@ -19,7 +22,8 @@
       { childMsg: 'Bar' }
     ]
   }
-})```
+})
+```
 
 **结果**：
 
@@ -30,29 +34,35 @@
 
 有时我们可能需要重复一个包含多个节点的块，这时可以用 `<template>` 标签包裹这个块。这里的 `<template>` 标签只起到语义上的包裹作用，其本身不会被渲染出来。例如：
 
-```<ul>
+```
+<ul>
   <template v-repeat="list">
     <li>{{msg}}</li>
     <li class="divider"></li>
   </template>
-</ul>```
+</ul>
+```
 
 ## 简单值数组
 
 简单值 (primitive value) 即字符串、数字、boolean 等并非对象的值。对于包含简单值的数组，你可用 `$value` 直接访问值：
 
-```<ul id="tags">
+```
+<ul id="tags">
   <li v-repeat="tags">
     {{$value}}
   </li>
-</ul>```
+</ul>
+```
 
-```new Vue({
+```
+new Vue({
   el: '#tags',
   data: {
     tags: ['JavaScript', 'MVVM', 'Vue.js']
   }
-})```
+})
+```
 
 **结果**：
 
@@ -64,13 +74,16 @@
 
 有时我们可能想要更明确地访问当前作用域的变量而不是隐式地回退到父作用域。你可以通过提供一个参数给 `v-repeat` 指令并用它作为将被迭代项的别名：
 
-```<ul id="users">
+```
+<ul id="users">
   <li v-repeat="user in users">
     {{user.name}} - {{user.email}}
   </li>
-</ul>```
+</ul>
+```
 
-```new Vue({
+```
+new Vue({
   el: '#users',
   data: {
     users: [
@@ -78,7 +91,8 @@
       { name: 'John Doh', email: 'john@doh.com' }
     ]
   }
-})```
+})
+```
 
 **结果**：
 
@@ -94,9 +108,11 @@
 
 Vue.js 内部对被观察数组的变异方法 (mutating methods，包括 `push()`, `pop()`, `shift()`, `unshift()`, `splice()`, `sort()` 和 `reverse()`) 进行了拦截，因此调用这些方法也将自动触发视图更新。
 
-```// 以下操作会触发 DOM 更新
+```
+// 以下操作会触发 DOM 更新
 demo.items.unshift({ childMsg: 'Baz' })
-demo.items.pop()```
+demo.items.pop()
+```
 
 ## 扩展方法
 
@@ -104,21 +120,27 @@ Vue.js 给被观察数组添加了两个便捷方法：`$set()` 和 `$remove()` 
 
 你应该避免直接通过索引来设置数据绑定数组中的元素，比如 `demo.items[0] = {}`，因为这些改动是无法被 Vue.js 侦测到的。你应该使用扩展的 `$set()` 方法：
 
-```// 不要用 `demo.items[0] = ...`
-demo.items.$set(0, { childMsg: 'Changed!'})```
+```
+// 不要用 `demo.items[0] = ...`
+demo.items.$set(0, { childMsg: 'Changed!'})
+```
 
 `$remove()` 只是 `splice()`方法的语法糖。它将移除给定索引处的元素。当参数不是数值时，`$remove()` 将在数组中搜索该值并删除第一个发现的对应元素。
 
-```// 删除索引为 0 的元素。
-demo.items.$remove(0)```
+```
+// 删除索引为 0 的元素。
+demo.items.$remove(0)
+```
 
 ## 替换数组
 
 当你使用非变异方法，比如`filter()`， `concat()` 或 `slice()`，返回的数组将是一个不同的实例。在此情况下，你可以用新数组替换旧的数组：
 
-```demo.items = demo.items.filter(function (item) {
+```
+demo.items = demo.items.filter(function (item) {
   return item.childMsg.match(/Hello/)
-})```
+})
+```
 
 你可能会认为这将导致整个列表的 DOM 被销毁并重新渲染。但别担心，Vue.js 能够识别一个数组元素是否已有关联的 Vue 实例， 并尽可能地进行有效复用。
 
@@ -128,7 +150,8 @@ demo.items.$remove(0)```
 
 例如，如果你的数据长这样：
 
-```{
+```
+{
   items: [
     { _uid: '88f869d', ... },
     { _uid: '7496c10', ... }
@@ -138,9 +161,11 @@ demo.items.$remove(0)```
 
 那么你可以像这样给出提示:
 
-```<div v-repeat="items" track-by="_uid">
+```
+<div v-repeat="items" track-by="_uid">
   `<!-- content -->
-</div>```
+</div>
+```
 
 在替换 `items` 数组时，Vue.js 如果碰到一个有 `_uid: '88f869d'` 的新对象，它就会知道可以直接复用有同样 `_uid` 的已有实例。
 
@@ -156,13 +181,16 @@ demo.items.$remove(0)```
 
 你也可以使用 `v-repeat` 遍历一个对象的所有属性。每个重复的实例会有一个特殊的属性 `$key`。对于简单值，你也可以象访问数组中的简单值那样使用 `$value` 属性。
 
-```<ul id="repeat-object">
+```
+<ul id="repeat-object">
   <li v-repeat="primitiveValues">{{$key}} : {{$value}}</li>
   <li>===</li>
   <li v-repeat="objectValues">{{$key}} : {{msg}}</li>
-</ul>```
+</ul>
+```
 
-```new Vue({
+```
+new Vue({
   el: '#repeat-object',
   data: {
     primitiveValues: {
@@ -179,7 +207,8 @@ demo.items.$remove(0)```
       }
     }
   }
-})```
+})
+```
 
 **结果**：
 
@@ -196,7 +225,8 @@ demo.items.$remove(0)```
 
 `v-repeat` 也可以接受一个整数。在这种情况下，它将重复显示一个模板多次。
 
-```<div id="range">
+```
+<div id="range">
     <div v-repeat="val">Hi! {{$index}}</div>
 </div>```
 
@@ -205,7 +235,8 @@ demo.items.$remove(0)```
   data: {
     val: 3
   }
-});```
+});
+```
 
 **结果**：
 
@@ -217,7 +248,7 @@ demo.items.$remove(0)```
 
 有时候我们只需要显示一个数组的过滤或排序过的版本，而不需要实际改变或重置原始数据。Vue 提供了两个内置的过滤器来简化此类需求： `filterBy` 和 `orderBy`。可查看 **方法文档** 获得更多细节。
 
-下一步: [事件监听](http://cn.vuejs.org/guide/events.html)。
+下一步: [事件监听](listen.md)。
 
 
 

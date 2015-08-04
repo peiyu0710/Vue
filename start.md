@@ -98,22 +98,29 @@ Directives 可以封装任何 DOM 操作。比如 `v-attr` 会操作一个元素
 
 在 `Vue.js`，每个组件都是一个简单的 Vue 实例。一个树形嵌套的各种组件就代表了你的应用程序的各种接口。通过 `Vue.extend` 返回的自定义构造函数可以把这些组件实例化，不过更推荐的声明式的用法是通过 `Vue.component(id, constructor)` 注册这些组件。一旦组件被注册，它们就可以在 Vue 实例的模板中以自定义元素形式使用了。
 
-```<my-component>
+```
+<my-component>
  `<!-- internals handled by my-component -->
-</my-component>```
+</my-component>
+```
 
 这个简单的机制使得我们可以以类似 **Web Components** 的声明形式对 Vue 组件进行复用和组合，同时无需最新版的浏览器或笨重的 `polyfills`。通过将一个应用程序拆分成简单的组件，代码库可以被尽可能的解耦，同时更易于维护。更多关于组件的内容，请移步至**组件系统**。
 
 ## 简单示例
 
-`<div id="demo">`  
-  `<h1>{{title | uppercase}}</h1>`  
-  `<ul>`  
-    ```<li v-repeat="todos" v-on="click: done = !done" class="{{done ?'done' :''}}">```
-      `{{content}}`
-   ` </li>`
-  `</ul>`
-`</div>`
+```
+<div id="demo">
+  <h1>{{title | uppercase}}</h1>
+  <ul>
+    <li
+      v-repeat="todos"
+      v-on="click: done = !done"
+      class="{{done ? 'done' : ''}}">
+      {{content}}
+    </li>
+  </ul>
+</div>
+```
 
 
 ```
@@ -148,7 +155,7 @@ TODOS
 
 也许你现在脑子里有很多问题，别担心，我们稍后都会一一提到的。
 
-下一步：[深入了解指令 (Directives)](http://cn.vuejs.org/guide/directives.html)。
+下一步：[深入了解指令 (Directives)](order.md)。
 
 
 

@@ -11,7 +11,7 @@
 - [组件系统](system.md)
 - [过滤效果](effect.md)
 - [创建大型应用](applications.md)
-- [扩展Vue](extend.md)
+- [扩展 Vue](extend.md)
 - [细节与最佳实践](practices.md)
 - [常见问题](problem.md)
 

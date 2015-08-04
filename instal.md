@@ -16,17 +16,20 @@
 
 ## NPM
 
-```$ npm install vue
+```
+$ npm install vue
 `# 获取CSP兼容版本：
 `$ npm install vue@csp
 `# 获取最新开发版本(来自于GitHub):
-$ npm install yyx990803/vue#dev```
+$ npm install yyx990803/vue#dev
+```
 
 ## Bower
 
 ```
 `# Bower 只能够获得稳定版本
-$ bower install vue```
+$ bower install vue
+```
 
 ## AMD 模块加载器
 
@@ -34,5 +37,5 @@ $ bower install vue```
 
 ## 准备好了吗？
 
-[走起！](http://cn.vuejs.org/guide/index.html)
+[走起！](start.md)
 

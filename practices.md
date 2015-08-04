@@ -11,7 +11,8 @@
 
 建议像这样初始化你的数据，而不是什么都不定义：
 
-```new Vue({
+```
+new Vue({
   el: '#demo',
   data: {
     message: '',
@@ -19,7 +20,8 @@
       valid: false
     }
   }
-})```
+})
+```
 
 为什么要这样做呢？因为 Vue 是通过递归遍历初始数据中的所有属性，并用 `Object.defineProperty` 把它们转化为 `getter` 和 `setter` 来实现数据观察的。如果一个属性在实例创建时不存在于初始数据中，那么 Vue 就没有办法观察这个属性了。
 
@@ -61,7 +63,8 @@ Vue 组件实例也有相应的实例方法：
 
 `<div id="example">{{msg}}</div>`
 
-```var vm = new Vue({
+```
+var vm = new Vue({
   el: '#example',
   data: {
     msg: '123'
@@ -71,11 +74,13 @@ vm.msg = 'new message' // change data
 vm.$el.textContent === 'new message' // false
 Vue.nextTick(function () {
   vm.$el.textContent === 'new message' // true
-})```
+})
+```
 
 除此之外，也有一个实例方法 `vm.$nextTick()`。这个方法和全局的 `Vue.nextTick` 功能一样，但更方便在组件内部使用，因为它不需要全局的 `Vue` 变量，另外它的回调函数的 `this` 上下文会自动绑定到调用它的 `Vue` 实例：
 
-```Vue.component('example', {
+```
+Vue.component('example', {
   template: '<span>{{msg}}</span>',
   data: function () {
     return {
@@ -91,7 +96,8 @@ Vue.nextTick(function () {
       })
     }
   }
-})```
+})
+```
 
 ## 组件作用域
 
@@ -101,14 +107,17 @@ Vue.nextTick(function () {
 
 一个常见的错误是，在父模版中尝试将一个指令绑定到子作用域里的属性或者方法上：
 
-```<div id="demo">
-  `<!-- 不起作用，因为作用域不对！ -->
+```
+<div id="demo">
+  <!-- 不起作用，因为作用域不对！ -->
   <child-component v-on="click: childMethod"></child-component>
-</div>```
+</div>
+```
 
 如果需要在子组件的根节点上绑定指令，应当将指令写在子组件的模板内：
 
-```Vue.component('child-component', {
+```
+Vue.component('child-component', {
   // 这次作用域对了
   template: '<div v-on="click: childMethod">Child</div>',
   methods: {
@@ -116,18 +125,21 @@ Vue.nextTick(function () {
       console.log('child method invoked!')
     }
   }
-})```
+})
+```
 
 注意，当组件和 `v-repeat` 一同使用时，`$index` 作为子作用域属性也会受到此规则的影响。
 
 另外，父模板里组件节点内部的 HTML 内容被看做是 “transclusion content”（插入内容）。除非子模版包含至少一个 `<content>`出口，不然这些插入内容不会被渲染。需要留意的是，插入内容也是**在父作用域中编译**的：
 
-```<div>
+```
+<div>
   <child-component>
     <!-- 在父作用域里编译 -->
     <p>{{msg}}</p>
   </child-component>
-</div>```
+</div>
+```
 
 你可以使用 `inline-template` 属性去明确内容在子模版的作用域中被编译：
 
@@ -149,7 +161,8 @@ Vue.nextTick(function () {
   `<child-component send-message="{{onChildMsg}}"></child-component>`  
 `</div>`  
 
-```new Vue({
+```
+new Vue({
   el: '#demo',
   data: {
     msg: ''
@@ -188,7 +201,8 @@ Vue.nextTick(function () {
       }
     }
   }
-})```
+})
+```
 
 **Result**：
 
@@ -204,7 +218,8 @@ Vue.nextTick(function () {
 
 父模板中调用组件的元素将会被组件本身的模板取代。因此，如果组件的模板包含多个顶级元素：
 
-```Vue.component('example', {
+```
+Vue.component('example', {
   template:
     '<div>A</div>' +
     '<div>B</div>'
@@ -213,13 +228,16 @@ Vue.nextTick(function () {
 
 或者模板只包含文本：
 
-```Vue.component('example', {
+```
+Vue.component('example', {
   template: 'Hello world'
-})```
+})
+```
 
 在这两个情况下，实例将变成一个**片段实例** (fragment instance)，也即没有根元素的实例。它的 $el 指向一个锚节点（普通模式下是空的文本节点，debug 模式下是注释节点）。更重要的是，父模板组件元素上的指令、过渡效果和属性绑定（props 除外）将无效，因为生成的实例并没有根元素供它们绑定：
 
-```<!-- 指令不生效，因为没有根元素用来绑定 -->
+```
+<!-- 指令不生效，因为没有根元素用来绑定 -->
 <example v-show="ok" v-transition="fade"></example>
 `
 `<!-- props 还是能够正常生效 -->
@@ -232,7 +250,7 @@ Vue.nextTick(function () {
 
 通过修改全局的 `Vue.options` 对象，可以修改实例选项的默认值。例如，你可以设置 `Vue.options.replace = false`，使所有 Vue 实例都按照 `replace: false` 的规则被编译。请谨慎使用这个功能 - 最好是只在一个项目刚开始的时候使用它，因为它会影响所有 Vue 实例的行为。
 
-下一节：[常见问题]()。
+下一节：[常见问题](problem.md)。
 
 
 
