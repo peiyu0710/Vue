@@ -60,16 +60,7 @@ new Vue({
 
 **效果**
 
-<form id="demo"><p><input type="text"> hi!</p><p><input type="checkbox"> yes</p><p><input type="radio" name="picked" value="one"><input type="radio" name="picked" value="two"> one</p><p><select><option>one</option><option>two</option></select> two</p><p><select multiple=""><option>one</option><option>two</option><option>three</option></select>one,three</p><p>data:</p><pre style="font-size:13px;background:transparent;line-height:1.5em">{
-  "msg": "hi!",
-  "checked": true,
-  "picked": "one",
-  "selected": "two",
-  "multiSelect": [
-    "one",
-    "three"
-  ]
-}</pre><p></p></form>
+![](images/6.png)
 
 ## 惰性更新
 
@@ -163,7 +154,7 @@ Vue.filter('extract', function (value, keyToExtract) {
 
 **结果**
 
-- edit me
+![](images/7.png)
 
 注意 `debounce` 参数并不对用户的输入事件进行 `debounce`：它只对底层数据的 “写入” 操作起作用。因此当使用 `debounce` 时，你应该用 `vm.$watch()` 而不是 `v-on` 来响应数据变化。
 

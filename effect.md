@@ -69,7 +69,7 @@ Vue.transition('expand', {
 
 **结果**
 
-<div id="demo"><div class="expand-transition">hello</div><button>Toggle</button>
+![](images/9.png)
 
 这里使用的 CSS 类名由 `v-transition` 指令的值所决定。以 `v-transition="fade"` 为例，CSS 类 `.fade-transition` 将会一直存在，而 `.fade-enter` 和 `.fade-leave` 将会在合适的时机自动被添加或移除。当 `v-transition` 指令没有提供值的时候，所使用的 CSS 类名将会是默认的 `.v-transition`， `.v-enter` 和 `.v-leave`。
 
@@ -159,7 +159,7 @@ CSS 动画通过与 CSS 过渡效果一样的方式进行调用，区别就是�
 
 **结果**
 
-<span class="bounce-transition">Look at me!</span><br><button>Toggle</button>
+![](images/10.png)
 
 ## 纯 JavaScript 过渡效果
 
@@ -213,11 +213,7 @@ Vue.transition('stagger', {
 
 示例：
 
-- Bruce Lee
-- Jackie Chan
-- Chuck Norris
-- Jet Li
-- Kung Fury
+![](images/11.png)
 
 下一节：[创建大型应用](applications.md)。
 

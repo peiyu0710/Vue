@@ -124,7 +124,7 @@ Vue.component('child', {
 
 **结果**：
 
-<input><br><span>Inherited message</span>
+![](images/8.png)
 
 >暴露 `$data` 作为 prop 也是可行的。传入的值必须是一个对象，它会被用来替换组件默认的 `$data` 对象。
 
